@@ -35,14 +35,14 @@ const fetchResults = async () => {
   }
 };
 
-cron.schedule("*/2 * * * *", async () => {
+cron.schedule("*/10 * * * *", async () => {
   // (async () => {
   res = await fetchResults();
   console.log({ res });
   lastResult = res[res.length - 1];
   // console.log(lastResult);
   body = await axios.post(
-    "http://localhost:9999/api/send-results-complement",
+    "https://lotto.fivipsystem.com/api/send-results-complement",
     lastResult
   );
   console.log(body.data);
