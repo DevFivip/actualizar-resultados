@@ -136,7 +136,7 @@ cron.schedule("*/10 * * * *", async () => {
   // console.log({ res });
   lastResult = res[res.length - 1];
   body = await axios.post(
-    "http://localhost:8000/api/send-results-complement",
+    "https://lotto.fivipsystem.com/api/send-results-complement",
     lastResult
   );
 
@@ -153,7 +153,7 @@ cron.schedule("*/10 * * * *", async () => {
   lastResult = res[res.length - 1];
   // console.log(lastResult);
   body = await axios.post(
-    "http://localhost:8000/api/send-results-granjita",
+    "https://lotto.fivipsystem.com/api/send-results-granjita",
     lastResult
   );
 
@@ -170,7 +170,7 @@ cron.schedule("*/10 * * * *", async () => {
   res = await fetchResultsSelvaParaiso();
   lastResult = res[res.length - 1];
   body = await axios.post(
-    "http://localhost:8000/api/send-results-selvaParaiso",
+    "https://lotto.fivipsystem.com/api/send-results-selvaParaiso",
     lastResult
   );
 
