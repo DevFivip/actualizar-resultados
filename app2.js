@@ -87,7 +87,7 @@ const init = async function () {
 }
 
 
-cron.schedule("32,38,40 * * * *", async () => {
+cron.schedule("34,36,40 * * * *", async () => {
     lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
     last = lottoActivoRD[lottoActivoRD.length - 1];
 
