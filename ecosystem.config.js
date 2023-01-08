@@ -1,7 +1,7 @@
 module.exports = {
   apps: [{
     name: "actualizar-loteria-app",
-    script: "./app.js",
+    script: "./app2.js",
     watch: true,
     env_production: {
       NODE_ENV: "production"
