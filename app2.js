@@ -76,13 +76,63 @@ const get = (url) => new Promise(async (success, rej) => {
 })
 
 
+function formatDate(date) {
+    var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+}
+
+const fetchResultsGranjita = async () => {
+    try {
+        res = [];
+        date = new Date();
+        date = date.toLocaleString("en-US", {
+            timeZone: "America/Caracas",
+        });
+
+        const response = await axios.get(
+            `https://webservice.premierpluss.com/loteries/results3?since=${formatDate(
+                date
+            )}&product=1`
+        );
+
+        console.log(response);
+        response.data.forEach((item) => {
+            numero = item.result.split("-");
+
+            if (numero[0] == "0") {
+                _numero = "0";
+            } else if (numero[0] == "00") {
+                _numero = "00";
+            } else {
+                _numero = zfill(numero[0], 2);
+            }
+
+            res.push({ numero: _numero, schedule_id: item.lottery.id - 2 });
+        });
+        //  console.log({ res });
+        return res;
+    } catch (error) {
+        console.log(error)
+        return false;
+    }
+};
+
+
 
 const init = async function () {
+    let lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
+    // lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
+    // laGranjita = await get("https://apitriples.parley.la/products-results/granjita-results");
+    let laGranjita = await fetchResultsGranjita();
 
-    lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
-    lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
-    laGranjita = await get("https://apitriples.parley.la/products-results/granjita-results");
-    console.log(lottoActivo, laGranjita, lottoActivoRD)
+    // console.log(lottoActivo, laGranjita)
 
 }
 
@@ -104,5 +154,49 @@ cron.schedule("34,36,40 * * * *", async () => {
     }
 
 })
+
+cron.schedule("7,9,13 * * * *", async () => {
+    lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
+
+    last = lottoActivo[lottoActivo.length - 1];
+
+    body = await axios.post(
+        ENDPOINT + "/api/send-results-lottoactivo",
+        last
+    );
+
+    if (body.valid) {
+        console.log({ last });
+    } else {
+        console.log("nada que hacer Lotto Activo");
+    }
+
+})
+
+
+cron.schedule("6,8,10 * * * *", async () => {
+    laGranjita = await fetchResultsGranjita();
+    last = laGranjita[laGranjita.length - 1];
+
+    body = await axios.post(
+        ENDPOINT + "/api/send-results-granjita",
+        last
+    );
+
+    if (body.valid) {
+        console.log({ last });
+    } else {
+        console.log("nada que hacer la granjita");
+    }
+
+})
+
+
+
+
+
+
+
+
 
 // init()
