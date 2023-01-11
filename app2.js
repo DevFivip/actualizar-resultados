@@ -124,15 +124,78 @@ const fetchResultsGranjita = async () => {
     }
 };
 
+const fetchResultsLottoRey = async () => {
+    try {
+        const response = await axios.get("https://centrodeapuestaselrey.com.ve/resultados/lotto-rey");
+        const html = response.data;
+        const resLottoRey = [];
+        const $ = cheerio.load(html);
 
+        let schedule_id = -1; // numero donde inicia los horarios de lotto activo rd
+        sections = $("img").each((v, k) => {
+            w = $(k).attr("src");
+
+            arry = w.split("/");
+            // console.log(arry)
+
+            count = arry.length;
+            if (
+                arry[count - 1] === "el-rey-logo.png"
+            ) {
+            } else {
+                _number = arry[count - 1].split("_");
+                schedule_id = ++schedule_id;
+                resLottoRey.push({ numero: _number[0], schedule_id });
+            }
+        });
+        return resLottoRey;
+    } catch (error) {
+        console.log({ error });
+        return false;
+    }
+}; // grupo 3
+
+const fetchResultsSelvaParaiso = async () => {
+    try {
+        const response = await axios.get("https://www.selvaparaiso.com/");
+        const html = response.data;
+        const resSelvaParaiso = [];
+        const $ = cheerio.load(html);
+
+        let schedule_id = 0;
+        sections = $("img").each((v, k) => {
+            w = $(k).attr("data-src");
+
+            arry = w.split("/");
+
+            count = arry.length;
+            if (
+                arry[count - 1] === "51obnwHIRDL._AC_SY580_.jpg" ||
+                arry[count - 1] === "Header-bueno-1024x618.png" ||
+                arry[count - 1] === "tabla-selva-paraiso-1024x312.png"
+            ) {
+            } else {
+                _number = arry[count - 1].split("-");
+                resSelvaParaiso.push({ numero: _number[0], schedule_id });
+                schedule_id = ++schedule_id;
+            }
+        });
+        console.log(resSelvaParaiso)
+        return resSelvaParaiso;
+    } catch (error) {
+        console.log({ error });
+        return false;
+    }
+}; // grupo 2
 
 const init = async function () {
-    let lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
+    // let lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
     // lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
     // laGranjita = await get("https://apitriples.parley.la/products-results/granjita-results");
-    let laGranjita = await fetchResultsGranjita();
+    // let laGranjita = await fetchResultsGranjita();
+    let selvaParaiso = await fetchResultsSelvaParaiso()
 
-    // console.log(lottoActivo, laGranjita)
+    console.log(selvaParaiso)
 
 }
 
@@ -190,6 +253,43 @@ cron.schedule("6,8,10 * * * *", async () => {
     }
 
 })
+
+cron.schedule("33,35,39 * * * *", async () => {
+    lotteRey = await fetchResultsLottoRey();
+    last = lotteRey[lotteRey.length - 1];
+
+    body = await axios.post(
+        ENDPOINT + "/api/send-results-lottorey",
+        last
+    );
+
+    if (body.valid) {
+        console.log({ last });
+    } else {
+        console.log("nada que hacer la lotto rey");
+    }
+
+})
+
+cron.schedule("2,4,13 * * * *", async () => {
+    selvaParaiso = await fetchResultsSelvaParaiso();
+    last = selvaParaiso[selvaParaiso.length - 1];
+
+    body = await axios.post(
+        ENDPOINT + "/api/send-results-selvaParaiso",
+        last
+    );
+
+    if (body.valid) {
+        console.log({ last });
+    } else {
+        console.log("nada que hacer selva paraiso");
+    }
+
+})
+
+
+
 
 
 
