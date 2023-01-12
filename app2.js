@@ -208,97 +208,97 @@ const init = async function () {
 }
 
 
-init()
+// init()
 
 
 
-// cron.schedule("34,36,40 * * * *", async () => {
-//     lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
-//     last = lottoActivoRD[lottoActivoRD.length - 1];
+ cron.schedule("34,36,40 * * * *", async () => {
+     lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
+     last = lottoActivoRD[lottoActivoRD.length - 1];
 
 
-//     body = await axios.post(
-//         ENDPOINT + "/api/send-results-lottoactivord",
-//         last
-//     );
+     body = await axios.post(
+         ENDPOINT + "/api/send-results-lottoactivord",
+         last
+    );
 
-//     if (body.valid) {
-//         console.log({ last });
-//     } else {
-//         console.log("nada que hacer Lotto Activo RD");
-//     }
+    if (body.valid) {
+        console.log({ last });
+    } else {
+        console.log("nada que hacer Lotto Activo RD");
+    }
 
-// })
+})
 
-// cron.schedule("7,9,13 * * * *", async () => {
-//     lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
+cron.schedule("7,9,13 * * * *", async () => {
+    lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
 
-//     last = lottoActivo[lottoActivo.length - 1];
+    last = lottoActivo[lottoActivo.length - 1];
 
-//     body = await axios.post(
-//         ENDPOINT + "/api/send-results-lottoactivo",
-//         last
-//     );
+    body = await axios.post(
+        ENDPOINT + "/api/send-results-lottoactivo",
+        last
+    );
 
-//     if (body.valid) {
-//         console.log({ last });
-//     } else {
-//         console.log("nada que hacer Lotto Activo");
-//     }
+    if (body.valid) {
+        console.log({ last });
+    } else {
+        console.log("nada que hacer Lotto Activo");
+    }
 
-// })
+})
 
 
-// cron.schedule("6,8,10 * * * *", async () => {
-//     laGranjita = await fetchResultsGranjita();
-//     last = laGranjita[laGranjita.length - 1];
+cron.schedule("6,8,10 * * * *", async () => {
+    laGranjita = await fetchResultsGranjita();
+    last = laGranjita[laGranjita.length - 1];
 
-//     body = await axios.post(
-//         ENDPOINT + "/api/send-results-granjita",
-//         last
-//     );
+    body = await axios.post(
+        ENDPOINT + "/api/send-results-granjita",
+        last
+    );
 
-//     if (body.valid) {
-//         console.log({ last });
-//     } else {
-//         console.log("nada que hacer la granjita");
-//     }
+    if (body.valid) {
+        console.log({ last });
+    } else {
+        console.log("nada que hacer la granjita");
+    }
 
-// })
+})
 
-// cron.schedule("33,35,39 * * * *", async () => {
-//     lotteRey = await fetchResultsLottoRey();
-//     last = lotteRey[lotteRey.length - 1];
+cron.schedule("33,35,39 * * * *", async () => {
+    lotteRey = await fetchResultsLottoRey();
+    last = lotteRey[lotteRey.length - 1];
 
-//     body = await axios.post(
-//         ENDPOINT + "/api/send-results-lottorey",
-//         last
-//     );
+    body = await axios.post(
+        ENDPOINT + "/api/send-results-lottorey",
+        last
+    );
 
-//     if (body.valid) {
-//         console.log({ last });
-//     } else {
-//         console.log("nada que hacer la lotto rey");
-//     }
+    if (body.valid) {
+        console.log({ last });
+    } else {
+        console.log("nada que hacer la lotto rey");
+    }
 
-// })
+})
 
-// cron.schedule("2,4,13 * * * *", async () => {
-//     selvaParaiso = await fetchResultsSelvaParaiso();
-//     last = selvaParaiso[selvaParaiso.length - 1];
+cron.schedule("2,4,13 * * * *", async () => {
+    selvaParaiso = await fetchResultsSelvaParaiso();
+    last = selvaParaiso[selvaParaiso.length - 1];
 
-//     body = await axios.post(
-//         ENDPOINT + "/api/send-results-selvaParaiso",
-//         last
-//     );
+    body = await axios.post(
+        ENDPOINT + "/api/send-results-selvaParaiso",
+        last
+    );
 
-//     if (body.valid) {
-//         console.log({ last });
-//     } else {
-//         console.log("nada que hacer selva paraiso");
-//     }
+    if (body.valid) {
+        console.log({ last });
+    } else {
+        console.log("nada que hacer selva paraiso");
+    }
 
-// })
+})
 
 
 
