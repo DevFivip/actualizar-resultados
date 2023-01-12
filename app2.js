@@ -4,9 +4,18 @@ const cron = require("node-cron");
 const ENDPOINT = 'https://lotto.fivipsystem.com';
 
 function zfill(number, width) {
+    console.log(number)
     var numberOutput = Math.abs(number); /* Valor absoluto del número */
     var length = number.toString().length; /* Largo del número */
     var zero = "0"; /* String de cero */
+
+    if (number == '00') {
+        return '00';
+    }
+
+    if (number == '0') {
+        return '0';
+    }
 
     if (width <= length) {
         if (number < 0) {
@@ -189,114 +198,115 @@ const fetchResultsSelvaParaiso = async () => {
 }; // grupo 2
 
 const init = async function () {
-    // let lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
+    let lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
     // lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
     // laGranjita = await get("https://apitriples.parley.la/products-results/granjita-results");
     // let laGranjita = await fetchResultsGranjita();
-    let selvaParaiso = await fetchResultsSelvaParaiso()
+    // let selvaParaiso = await fetchResultsSelvaParaiso()
 
-    console.log(selvaParaiso)
-
+    console.log(lottoActivo)
 }
 
 
-cron.schedule("34,36,40 * * * *", async () => {
-    lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
-    last = lottoActivoRD[lottoActivoRD.length - 1];
-
-
-    body = await axios.post(
-        ENDPOINT + "/api/send-results-lottoactivord",
-        last
-    );
-
-    if (body.valid) {
-        console.log({ last });
-    } else {
-        console.log("nada que hacer Lotto Activo RD");
-    }
-
-})
-
-cron.schedule("7,9,13 * * * *", async () => {
-    lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
-
-    last = lottoActivo[lottoActivo.length - 1];
-
-    body = await axios.post(
-        ENDPOINT + "/api/send-results-lottoactivo",
-        last
-    );
-
-    if (body.valid) {
-        console.log({ last });
-    } else {
-        console.log("nada que hacer Lotto Activo");
-    }
-
-})
-
-
-cron.schedule("6,8,10 * * * *", async () => {
-    laGranjita = await fetchResultsGranjita();
-    last = laGranjita[laGranjita.length - 1];
-
-    body = await axios.post(
-        ENDPOINT + "/api/send-results-granjita",
-        last
-    );
-
-    if (body.valid) {
-        console.log({ last });
-    } else {
-        console.log("nada que hacer la granjita");
-    }
-
-})
-
-cron.schedule("33,35,39 * * * *", async () => {
-    lotteRey = await fetchResultsLottoRey();
-    last = lotteRey[lotteRey.length - 1];
-
-    body = await axios.post(
-        ENDPOINT + "/api/send-results-lottorey",
-        last
-    );
-
-    if (body.valid) {
-        console.log({ last });
-    } else {
-        console.log("nada que hacer la lotto rey");
-    }
-
-})
-
-cron.schedule("2,4,13 * * * *", async () => {
-    selvaParaiso = await fetchResultsSelvaParaiso();
-    last = selvaParaiso[selvaParaiso.length - 1];
-
-    body = await axios.post(
-        ENDPOINT + "/api/send-results-selvaParaiso",
-        last
-    );
-
-    if (body.valid) {
-        console.log({ last });
-    } else {
-        console.log("nada que hacer selva paraiso");
-    }
-
-})
+init()
 
 
 
+// cron.schedule("34,36,40 * * * *", async () => {
+//     lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
+//     last = lottoActivoRD[lottoActivoRD.length - 1];
 
 
+//     body = await axios.post(
+//         ENDPOINT + "/api/send-results-lottoactivord",
+//         last
+//     );
+
+//     if (body.valid) {
+//         console.log({ last });
+//     } else {
+//         console.log("nada que hacer Lotto Activo RD");
+//     }
+
+// })
+
+// cron.schedule("7,9,13 * * * *", async () => {
+//     lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
+
+//     last = lottoActivo[lottoActivo.length - 1];
+
+//     body = await axios.post(
+//         ENDPOINT + "/api/send-results-lottoactivo",
+//         last
+//     );
+
+//     if (body.valid) {
+//         console.log({ last });
+//     } else {
+//         console.log("nada que hacer Lotto Activo");
+//     }
+
+// })
 
 
+// cron.schedule("6,8,10 * * * *", async () => {
+//     laGranjita = await fetchResultsGranjita();
+//     last = laGranjita[laGranjita.length - 1];
+
+//     body = await axios.post(
+//         ENDPOINT + "/api/send-results-granjita",
+//         last
+//     );
+
+//     if (body.valid) {
+//         console.log({ last });
+//     } else {
+//         console.log("nada que hacer la granjita");
+//     }
+
+// })
+
+// cron.schedule("33,35,39 * * * *", async () => {
+//     lotteRey = await fetchResultsLottoRey();
+//     last = lotteRey[lotteRey.length - 1];
+
+//     body = await axios.post(
+//         ENDPOINT + "/api/send-results-lottorey",
+//         last
+//     );
+
+//     if (body.valid) {
+//         console.log({ last });
+//     } else {
+//         console.log("nada que hacer la lotto rey");
+//     }
+
+// })
+
+// cron.schedule("2,4,13 * * * *", async () => {
+//     selvaParaiso = await fetchResultsSelvaParaiso();
+//     last = selvaParaiso[selvaParaiso.length - 1];
+
+//     body = await axios.post(
+//         ENDPOINT + "/api/send-results-selvaParaiso",
+//         last
+//     );
+
+//     if (body.valid) {
+//         console.log({ last });
+//     } else {
+//         console.log("nada que hacer selva paraiso");
+//     }
+
+// })
 
 
 
 
 
-// init()
+
+
+
+
+
+
