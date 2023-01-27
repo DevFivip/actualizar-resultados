@@ -181,6 +181,7 @@ const fetchResultsSelvaParaiso = async () => {
             if (
                 arry[count - 1] === "51obnwHIRDL._AC_SY580_.jpg" ||
                 arry[count - 1] === "Header-bueno-1024x618.png" ||
+                arry[count - 1].indexOf('.png') > 0 ||
                 arry[count - 1] === "tabla-selva-paraiso-1024x312.png"
             ) {
             } else {
@@ -189,7 +190,7 @@ const fetchResultsSelvaParaiso = async () => {
                 schedule_id = ++schedule_id;
             }
         });
-        console.log(resSelvaParaiso)
+        // console.log(resSelvaParaiso)
         return resSelvaParaiso;
     } catch (error) {
         console.log({ error });
@@ -212,14 +213,13 @@ const init = async function () {
 
 
 
- cron.schedule("34,36,40 * * * *", async () => {
-     lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
-     last = lottoActivoRD[lottoActivoRD.length - 1];
+cron.schedule("34,36,40 * * * *", async () => {
+    lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
+    last = lottoActivoRD[lottoActivoRD.length - 1];
 
-
-     body = await axios.post(
-         ENDPOINT + "/api/send-results-lottoactivord",
-         last
+    body = await axios.post(
+        ENDPOINT + "/api/send-results-lottoactivord",
+        last
     );
 
     if (body.valid) {
