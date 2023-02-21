@@ -371,24 +371,24 @@ const fetchResultsGuacharoActivo = async () => {
 }; // grupo 2
 
 
-cron.schedule("5,8,12,15 * * * *", async () => {
-  console.log("try Animalitos");
-  res = await fetchResultsLottoActivo();
-  // console.log({ res });
+// cron.schedule("5,8,12,15 * * * *", async () => {
+//   console.log("try Animalitos");
+//   res = await fetchResultsLottoActivo();
+//   // console.log({ res });
 
-  lastResult = res[res.length - 1];
-  body = await axios.post(
-    ENDPOINT + "/api/send-results-complement",
-    lastResult
-  );
+//   lastResult = res[res.length - 1];
+//   body = await axios.post(
+//     ENDPOINT + "/api/send-results-complement",
+//     lastResult
+//   );
 
-  if (body.valid) {
-    console.log({ body });
-  } else {
-    console.log("noting for to do animalitos");
-  }
+//   if (body.valid) {
+//     console.log({ body });
+//   } else {
+//     console.log("noting for to do animalitos");
+//   }
 
-});
+// });
 
 cron.schedule("5,8,12,15 * * * *", async () => {
   console.log("try Granjita");
@@ -423,21 +423,21 @@ cron.schedule("2,8,12,15  * * * *", async () => {
   }
 });
 
-cron.schedule("6,8,12,15  * * * *", async () => {
-  console.log("try lotto activo rd");
-  res = await fetchResultsLottoActivoRD();
-  lastResult = res[res.length - 1];
-  body = await axios.post(
-    ENDPOINT + "/api/send-results-lottoactivord",
-    lastResult
-  );
+// cron.schedule("6,8,12,15  * * * *", async () => {
+//   console.log("try lotto activo rd");
+//   res = await fetchResultsLottoActivoRD();
+//   lastResult = res[res.length - 1];
+//   body = await axios.post(
+//     ENDPOINT + "/api/send-results-lottoactivord",
+//     lastResult
+//   );
 
-  if (body.valid) {
-    console.log({ body });
-  } else {
-    console.log("noting for to do selva paraiso");
-  }
-});
+//   if (body.valid) {
+//     console.log({ body });
+//   } else {
+//     console.log("noting for to do selva paraiso");
+//   }
+// });
 
 cron.schedule("3,8,12,15  * * * *", async () => {
   console.log("try Lotto Rey");
