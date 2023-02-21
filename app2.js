@@ -66,11 +66,14 @@ const get = (url) => new Promise(async (success, rej) => {
             w === "https://apitriples.parley.la/assets/img/products/animals/lotto-rey/logo_xs_.png" ||
             w === "" ||
             w === "https://apitriples.parley.la/assets/img/products/animals/lotto-activo-rd/logo_rd.png" ||
-            w === "https://apitriples.parley.la/assets/img/products/animals/granjita/logo_a.png"
+            w === "https://apitriples.parley.la/assets/img/products/animals/granjita/logo_a.png" ||
+            w === "https://apitriples.parley.la/assets/img/products/animals/la-ruca/logo_xs_.png" ||
+            w === "https://apitriples.parley.la/assets/img/products/animals/ruleta-activa/logo_xs_.png" ||
+            w === "https://apitriples.parley.la/assets/img/products/animals/la-ricachona/logo_xs_.png"
         ) {
 
         } else {
-            // console.log({ w })
+            console.log({ w })
             arry = w.split("/");
             count = arry.length;
             _number = arry[count - 1].split("-");
@@ -213,40 +216,40 @@ const init = async function () {
 
 
 
-// cron.schedule("34,36,40 * * * *", async () => {
-//     lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
-//     last = lottoActivoRD[lottoActivoRD.length - 1];
+cron.schedule("34,36,40 * * * *", async () => {
+    lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
+    last = lottoActivoRD[lottoActivoRD.length - 1];
 
-//     body = await axios.post(
-//         ENDPOINT + "/api/send-results-lottoactivord",
-//         last
-//     );
+    body = await axios.post(
+        ENDPOINT + "/api/send-results-lottoactivord",
+        last
+    );
 
-//     if (body.valid) {
-//         console.log({ last });
-//     } else {
-//         console.log("nada que hacer Lotto Activo RD");
-//     }
+    if (body.valid) {
+        console.log({ last });
+    } else {
+        console.log("nada que hacer Lotto Activo RD");
+    }
 
-// })
+})
 
-// cron.schedule("7,9,13 * * * *", async () => {
-//     lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
+cron.schedule("7,9,13 * * * *", async () => {
+    lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
 
-//     last = lottoActivo[lottoActivo.length - 1];
+    last = lottoActivo[lottoActivo.length - 1];
 
-//     body = await axios.post(
-//         ENDPOINT + "/api/send-results-lottoactivo",
-//         last
-//     );
+    body = await axios.post(
+        ENDPOINT + "/api/send-results-lottoactivo",
+        last
+    );
 
-//     if (body.valid) {
-//         console.log({ last });
-//     } else {
-//         console.log("nada que hacer Lotto Activo");
-//     }
+    if (body.valid) {
+        console.log({ last });
+    } else {
+        console.log("nada que hacer Lotto Activo");
+    }
 
-// })
+})
 
 
 cron.schedule("6,8,10 * * * *", async () => {
