@@ -47,6 +47,7 @@ const get = (url) => new Promise(async (success, rej) => {
         count = arry.length;
 
         if (
+            w === "https://apitriples.parley.la/assets/img/products/animals/animalito-millonario/logo_xs_.png" ||
             w === "https://apitriples.parley.la/assets/img/products/animals/terminalito/logo_xs_.png" ||
             w === "https://apitriples.parley.la/assets/img/products/animals/ruleta-royal/logo_xs_.png" ||
             w === "https://apitriples.parley.la/assets/img/products/animals/el-ruco/logo_xs_.png" ||
