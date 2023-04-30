@@ -186,6 +186,9 @@ const fetchResultsSelvaParaiso = async () => {
 
             count = arry.length;
             if (
+                arry[count - 1] === "51obnwHIRDL._AC_SY580_.jpg?fit=500%2C368&ssl=1" ||
+                arry[count - 1] === "51obnwHIRDL._AC_SY580_.jpg?fit=500%2C368&ssl=1" ||
+                arry[count - 1] === "51obnwHIRDL._AC_SY580_.jpg?fit=500%2C368&ssl=1" ||
                 arry[count - 1] === "51obnwHIRDL._AC_SY580_.jpg" ||
                 arry[count - 1] === "Header-bueno-1024x618.png" ||
                 arry[count - 1].indexOf('.png') > 0 ||
