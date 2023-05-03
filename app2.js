@@ -259,7 +259,7 @@ cron.schedule("7,9,13 * * * *", async () => {
 })
 
 
-cron.schedule("6,8,10 * * * *", async () => {
+cron.schedule("6,8,10,12 * * * *", async () => {
     laGranjita = await fetchResultsGranjita();
     last = laGranjita[laGranjita.length - 1];
 
