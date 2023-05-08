@@ -4,7 +4,6 @@ const cron = require("node-cron");
 const ENDPOINT = 'https://lotto.fivipsystem.com';
 
 function zfill(number, width) {
-    console.log(number)
     var numberOutput = Math.abs(number); /* Valor absoluto del número */
     var length = number.toString().length; /* Largo del número */
     var zero = "0"; /* String de cero */
@@ -77,7 +76,7 @@ const get = (url) => new Promise(async (success, rej) => {
         ) {
 
         } else {
-            console.log({ w })
+            // console.log({ w })
             arry = w.split("/");
             count = arry.length;
             _number = arry[count - 1].split("-");
@@ -118,7 +117,7 @@ const fetchResultsGranjita = async () => {
             )}&product=1`
         );
 
-        console.log(response);
+        // console.log(response);
         response.data.forEach((item) => {
             numero = item.result.split("-");
 
@@ -212,18 +211,19 @@ const init = async function () {
     let lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
     // lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
     // laGranjita = await get("https://apitriples.parley.la/products-results/granjita-results");
-    // let laGranjita = await fetchResultsGranjita();
+    let laGranjita = await fetchResultsGranjita();
     // let selvaParaiso = await fetchResultsSelvaParaiso()
 
     console.log(lottoActivo)
+    console.log(laGranjita)
 }
 
 
-// init()
+//init()
 
 
 
-cron.schedule("34,36,40 * * * *", async () => {
+cron.schedule("38,40,45 * * * *", async () => {
     lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
     last = lottoActivoRD[lottoActivoRD.length - 1];
 
@@ -240,7 +240,7 @@ cron.schedule("34,36,40 * * * *", async () => {
 
 })
 
-cron.schedule("7,9,13 * * * *", async () => {
+cron.schedule("10,12,13 * * * *", async () => {
     lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
 
     last = lottoActivo[lottoActivo.length - 1];
@@ -259,7 +259,7 @@ cron.schedule("7,9,13 * * * *", async () => {
 })
 
 
-cron.schedule("6,8,10,12 * * * *", async () => {
+cron.schedule("10,12,13 * * * *", async () => {
     laGranjita = await fetchResultsGranjita();
     last = laGranjita[laGranjita.length - 1];
 
