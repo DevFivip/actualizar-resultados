@@ -42,7 +42,7 @@ const get = (url) => new Promise(async (success, rej) => {
 
         w = $(k).attr("src");
         arry = w.split("/");
-        // console.log(w)
+        console.log(w)
         count = arry.length;
 
         if (
@@ -139,6 +139,7 @@ const fetchResultsGranjita = async () => {
     }
 };
 
+
 const fetchResultsLottoRey = async () => {
     try {
         const response = await axios.get("https://centrodeapuestaselrey.com.ve/resultados/lotto-rey");
@@ -207,6 +208,211 @@ const fetchResultsSelvaParaiso = async () => {
     }
 }; // grupo 2
 
+
+const fetchResultsRuletaActiva = async () => {
+    try {
+        res = [];
+        date = new Date();
+        date = date.toLocaleString("en-US", {
+            timeZone: "America/Caracas",
+        });
+
+        const response = await axios.get(
+            `https://webservice.premierpluss.com/loteries/results3?since=${formatDate(
+                date
+            )}&product=3`
+        );
+
+        // console.log(response);
+        response.data.forEach((item, k) => {
+            // console.log({k});
+            numero = item.result.split("-");
+
+            if (numero[0] == "0") {
+                _numero = "0";
+            } else if (numero[0] == "00") {
+                _numero = "00";
+            } else {
+                _numero = zfill(numero[0], 2);
+            }
+
+            res.push({ numero: _numero, schedule_id: k });
+        });
+
+        return res;
+    } catch (error) {
+        console.log(error)
+        return false;
+    }
+};
+
+const fetchResultsChanceAnimalitos = async () => {
+    try {
+        res = [];
+        date = new Date();
+        date = date.toLocaleString("en-US", {
+            timeZone: "America/Caracas",
+        });
+
+        const response = await axios.get(
+            `https://loteriadehoy.com/animalito/chanceconanimalitos/resultados/`
+        );
+        const $ = cheerio.load(response.data);
+
+        const textos = $('.circle-legend h4').map((_, element) => $(element).text().replace(/\n|\t/g, '').trim()).get();
+        console.log(textos);
+
+        return textos.map((v, k) => {
+            resArr = v.split(" ");
+            obj = {
+                numero: zfill(resArr[0], 2),
+                schedule_id: k
+            }
+            return obj
+        })
+
+    } catch (error) {
+        console.log(error)
+        return false;
+    }
+};
+
+const fetchResultsLottoActivoRD = async () => {
+    try {
+        res = [];
+        date = new Date();
+        date = date.toLocaleString("en-US", {
+            timeZone: "America/Caracas",
+        });
+
+        const response = await axios.get(
+            `https://loteriadehoy.com/animalito/lottoactivordominicana/resultados/`
+        );
+        const $ = cheerio.load(response.data);
+
+        const textos = $('.circle-legend h4').map((_, element) => $(element).text().replace(/\n|\t/g, '').trim()).get();
+        console.log(textos);
+
+        return textos.map((v, k) => {
+            resArr = v.split(" ");
+            obj = {
+                numero: zfill(resArr[0], 2),
+                schedule_id: k
+            }
+            return obj
+        })
+
+    } catch (error) {
+        console.log(error)
+        return false;
+    }
+};
+const fetchResultsSelvaPlus = async () => {
+    try {
+        res = [];
+        date = new Date();
+        date = date.toLocaleString("en-US", {
+            timeZone: "America/Caracas",
+        });
+
+        const response = await axios.get(
+            `https://webservice.premierpluss.com/loteries/results3?since=${formatDate(
+                date
+            )}&product=20`
+        );
+
+        // console.log(response);
+        response.data.forEach((item, k) => {
+            // console.log({k});
+            numero = item.result.split("-");
+
+            if (numero[0] == "0") {
+                _numero = "0";
+            } else if (numero[0] == "00") {
+                _numero = "00";
+            } else {
+                _numero = zfill(numero[0], 2);
+            }
+
+            res.push({ numero: _numero, schedule_id: k });
+        });
+
+        return res;
+    } catch (error) {
+        console.log(error)
+        return false;
+    }
+};
+
+const fetchResultsGuacharo = async () => {
+    try {
+        res = [];
+        date = new Date();
+        date = date.toLocaleString("en-US", {
+            timeZone: "America/Caracas",
+        });
+
+        const response = await axios.get(
+            `https://webservice.premierpluss.com/loteries/results3?since=${formatDate(
+                date
+            )}&product=24`
+        );
+
+        // console.log(response);
+        response.data.forEach((item, k) => {
+            // console.log({k});
+            numero = item.result.split("-");
+
+            if (numero[0] == "0") {
+                _numero = "0";
+            } else if (numero[0] == "00") {
+                _numero = "00";
+            } else {
+                _numero = zfill(numero[0], 2);
+            }
+
+            res.push({ numero: _numero, schedule_id: k });
+        });
+
+        return res;
+    } catch (error) {
+        console.log(error)
+        return false;
+    }
+};
+
+const fetchResultsLottoActivo = async () => {
+    try {
+        res = [];
+        date = new Date();
+        date = date.toLocaleString("en-US", {
+            timeZone: "America/Caracas",
+        });
+
+        const response = await axios.get(
+            `https://loteriadehoy.com/animalito/lottoactivo/resultados/`
+        );
+        const $ = cheerio.load(response.data);
+
+        const textos = $('.circle-legend h4').map((_, element) => $(element).text().replace(/\n|\t/g, '').trim()).get();
+        console.log(textos);
+
+        return textos.map((v, k) => {
+            resArr = v.split(" ");
+            obj = {
+                numero: zfill(resArr[0], 2),
+                schedule_id: k
+            }
+            return obj
+        })
+
+    } catch (error) {
+        console.log(error)
+        return false;
+    }
+};
+
+
 const init = async function () {
     let lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
     // lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
@@ -219,12 +425,12 @@ const init = async function () {
 }
 
 
-//init()
+// init()
 
 
-
-cron.schedule("38,40,45 * * * *", async () => {
-    lottoActivoRD = await get("https://apitriples.parley.la/products-results/lotto-activo-rd-resultados");
+// lotto activo RD
+cron.schedule("38,40,45,50 * * * *", async () => {
+    lottoActivoRD = await fetchResultsLottoActivoRD();
     last = lottoActivoRD[lottoActivoRD.length - 1];
 
     body = await axios.post(
@@ -233,32 +439,33 @@ cron.schedule("38,40,45 * * * *", async () => {
     );
 
     if (body.valid) {
-        console.log({ last });
+        // console.log({ last });
     } else {
         console.log("nada que hacer Lotto Activo RD");
     }
 
 })
 
-cron.schedule("10,12,13 * * * *", async () => {
-    lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
+//
+// cron.schedule("11,12,13 * * * *", async () => {
+//     lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
 
-    last = lottoActivo[lottoActivo.length - 1];
+//     last = lottoActivo[lottoActivo.length - 1];
 
-    body = await axios.post(
-        ENDPOINT + "/api/send-results-lottoactivo",
-        last
-    );
+//     body = await axios.post(
+//         ENDPOINT + "/api/send-results-lottoactivo",
+//         last
+//     );
 
-    if (body.valid) {
-        console.log({ last });
-    } else {
-        console.log("nada que hacer Lotto Activo");
-    }
+//     if (body.valid) {
+//         // console.log({ last });
+//     } else {
+//         console.log("nada que hacer Lotto Activo");
+//     }
 
-})
+// })
 
-
+// la granjita
 cron.schedule("10,12,13 * * * *", async () => {
     laGranjita = await fetchResultsGranjita();
     last = laGranjita[laGranjita.length - 1];
@@ -273,9 +480,25 @@ cron.schedule("10,12,13 * * * *", async () => {
     } else {
         console.log("nada que hacer la granjita");
     }
-
 })
 
+//lotto activo 
+cron.schedule("10,12,13 * * * *", async () => {
+    lottoactivo = await fetchResultsLottoActivo();
+    last = lottoactivo[lottoactivo.length - 1];
+
+    body = await axios.post(
+        ENDPOINT + "/api/send-results-lottoactivo",
+        last
+    );
+
+    if (body.valid) {
+        console.log({ last });
+    } else {
+        console.log("nada que hacer lotto activo");
+    }
+})
+// lotto rey
 cron.schedule("33,35,39 * * * *", async () => {
     lotteRey = await fetchResultsLottoRey();
     last = lotteRey[lotteRey.length - 1];
@@ -292,7 +515,7 @@ cron.schedule("33,35,39 * * * *", async () => {
     }
 
 })
-
+// selva paraiso
 cron.schedule("2,4,13 * * * *", async () => {
     selvaParaiso = await fetchResultsSelvaParaiso();
     last = selvaParaiso[selvaParaiso.length - 1];
