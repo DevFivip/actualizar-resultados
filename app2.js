@@ -412,6 +412,37 @@ const fetchResultsLottoActivo = async () => {
     }
 };
 
+const fetchResultsLaGranjita = async () => {
+    try {
+        res = [];
+        date = new Date();
+        date = date.toLocaleString("en-US", {
+            timeZone: "America/Caracas",
+        });
+
+        const response = await axios.get(
+            `https://loteriadehoy.com/animalito/lagranjita/resultados/`
+        );
+        const $ = cheerio.load(response.data);
+
+        const textos = $('.circle-legend h4').map((_, element) => $(element).text().replace(/\n|\t/g, '').trim()).get();
+        console.log(textos);
+
+        return textos.map((v, k) => {
+            resArr = v.split(" ");
+            obj = {
+                numero: zfill(resArr[0], 2),
+                schedule_id: k
+            }
+            return obj
+        })
+
+    } catch (error) {
+        console.log(error)
+        return false;
+    }
+};
+
 
 const init = async function () {
     let lottoActivo = await get("https://apitriples.parley.la/products-results/lotto-activo-results");
@@ -439,7 +470,8 @@ cron.schedule("38,40,45,50 * * * *", async () => {
     );
 
     if (body.valid) {
-        // console.log({ last });
+        console.log("Lotto Activo RD Enviado Correctamente");
+        console.log({ last });
     } else {
         console.log("nada que hacer Lotto Activo RD");
     }
@@ -467,7 +499,7 @@ cron.schedule("38,40,45,50 * * * *", async () => {
 
 // la granjita
 cron.schedule("10,12,13 * * * *", async () => {
-    laGranjita = await fetchResultsGranjita();
+    laGranjita = await fetchResultsLaGranjita();
     last = laGranjita[laGranjita.length - 1];
 
     body = await axios.post(
@@ -476,6 +508,7 @@ cron.schedule("10,12,13 * * * *", async () => {
     );
 
     if (body.valid) {
+        console.log("La Granjita Enviado Correctamente");
         console.log({ last });
     } else {
         console.log("nada que hacer la granjita");
@@ -483,7 +516,7 @@ cron.schedule("10,12,13 * * * *", async () => {
 })
 
 //lotto activo 
-cron.schedule("10,12,13 * * * *", async () => {
+cron.schedule("8,10,12,13 * * * *", async () => {
     lottoactivo = await fetchResultsLottoActivo();
     last = lottoactivo[lottoactivo.length - 1];
 
@@ -493,11 +526,13 @@ cron.schedule("10,12,13 * * * *", async () => {
     );
 
     if (body.valid) {
+        console.log("Lotto Activo Enviado Correctamente");
         console.log({ last });
     } else {
         console.log("nada que hacer lotto activo");
     }
 })
+
 // lotto rey
 cron.schedule("33,35,39 * * * *", async () => {
     lotteRey = await fetchResultsLottoRey();
