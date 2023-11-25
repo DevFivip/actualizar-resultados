@@ -436,7 +436,6 @@ const fetchResultsLaGranjita = async () => {
             }
             return obj
         })
-
     } catch (error) {
         console.log(error)
         return false;
