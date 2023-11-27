@@ -15,37 +15,37 @@ const { fetchResultsRuletaActiva,
 
 const run = () => {
     console.log('CRON IS RUNNING')
-    cron.schedule("5,15 * * * *", async () => {
+    cron.schedule("5,9,15 * * * *", async () => {
         const junglamillonaria = await fetchResultsJunglaMillonaria();
         const last = junglamillonaria[junglamillonaria.length - 1];
         await fetch('/api/send-results-junglamillonaria', last);
     })
 
-    cron.schedule("6,16 * * * *", async () => {
+    cron.schedule("6,10,16 * * * *", async () => {
         const guacharo = await fetchResultsGuacharo();
         const last = guacharo[guacharo.length - 1];
         await fetch('/api/send-results-guacharo', last);
     })
 
-    cron.schedule("7,17 * * * *", async () => {
+    cron.schedule("7,11,17 * * * *", async () => {
         const selvaplus = await fetchResultsSelvaPlus();
         const last = selvaplus[selvaplus.length - 1];
         await fetch('/api/send-results-selvaplus', last);
     })
 
-    cron.schedule("8,18 * * * *", async () => {
+    cron.schedule("8,12,18 * * * *", async () => {
         const chanceconanimalitos = await fetchResultsChanceAnimalitos();
         const last = chanceconanimalitos[chanceconanimalitos.length - 1];
         await fetch('/api/send-results-chanceanimalitos', last);
     })
 
-     cron.schedule("9,19 * * * *", async () => {
+     cron.schedule("9,15,19 * * * *", async () => {
          const ruletaactiva = await fetchResultsRuletaActiva();
          const last = ruletaactiva[ruletaactiva.length - 1];
          await fetch('/api/send-results-ruletaactiva', last);
      })
     // // tropi gana
-    cron.schedule("5,12 * * * *", async () => {
+    cron.schedule("5,7,12 * * * *", async () => {
         const tropigana = await fetchResultsTropiGana();
         const last = tropigana[tropigana.length - 1];
         await fetch("/api/send-results-tropigana", last);
@@ -81,7 +81,7 @@ const run = () => {
     })
 
     // selva paraiso
-    cron.schedule("3,5,9 * * * *", async () => {
+    cron.schedule("3,5,9,16 * * * *", async () => {
         const selvaParaiso = await fetchResultsSelvaParaiso();
         const last = selvaParaiso[selvaParaiso.length - 1];
         await fetch("/api/send-results-selvaParaiso", last);
