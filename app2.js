@@ -517,7 +517,7 @@ cron.schedule("10,12,13 * * * *", async () => {
 //lotto activo 
 cron.schedule("8,10,12,13 * * * *", async () => {
     lottoactivo = await fetchResultsLottoActivo();
-    last = lottoactivo[lottoactivo.length - 2];
+    last = lottoactivo[lottoactivo.length - 1];
 
     body = await axios.post(
         ENDPOINT + "/api/send-results-lottoactivo",
